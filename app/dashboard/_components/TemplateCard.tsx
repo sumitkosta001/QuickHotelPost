@@ -21,4 +21,8 @@ function TemplateCard({ item }: TemplateCardProps) {
   )
 }
 
+<<<<<<< HEAD
 export default TemplateCard;
+=======
+export default TemplateCard;
+>>>>>>> 830c8b68ae93733d5058c0594a3eab757c45081e

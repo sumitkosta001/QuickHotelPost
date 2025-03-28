@@ -178,6 +178,7 @@ export default [
       }
     },
     {
+<<<<<<< HEAD
       name: 'CSR Activity Post',
       desc: 'Promote the hotel’s CSR initiatives and community service.',
       category: 'CSR',
@@ -207,6 +208,22 @@ export default [
         whatsapp:
           'Hi! 🌟 We’ve completed [activityName] as part of our CSR initiative. Thank you for your support! 🌱'
       }
+=======
+        name: 'Hotel Discount Coupon Post Generator',
+        desc: 'Generate promotional posts highlighting time-sensitive discount offers.',
+        category: 'Promotions',
+        icon: 'https://cdn-icons-png.flaticon.com/128/new-valid-icon.png',
+        slug: 'hotel-discount-coupon',
+        aiPrompt: 'Create a promotional post highlighting discount coupons and limited-time offers for hotel rooms and services in rich text format.',
+        form: [
+            {
+                label: 'Enter discount details',
+                field: 'textarea',
+                name: 'discountDetails',
+                required: true
+            }
+        ]
+>>>>>>> 830c8b68ae93733d5058c0594a3eab757c45081e
     },
     {
       name: 'Destination Wedding Post',
