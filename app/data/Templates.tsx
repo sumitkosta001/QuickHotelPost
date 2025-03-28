@@ -200,7 +200,7 @@ export default [
         name: 'Hotel Discount Coupon Post Generator',
         desc: 'Generate promotional posts highlighting time-sensitive discount offers.',
         category: 'Promotions',
-        icon: 'https://cdn-icons-png.flaticon.com/128/1357/1357382.png',
+        icon: 'https://cdn-icons-png.flaticon.com/128/new-valid-icon.png',
         slug: 'hotel-discount-coupon',
         aiPrompt: 'Create a promotional post highlighting discount coupons and limited-time offers for hotel rooms and services in rich text format.',
         form: [
