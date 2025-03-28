@@ -2,7 +2,7 @@ import Templates from '@/app/data/Templates'
 import React, { useEffect, useState } from 'react'
 import TemplateCard from './TemplateCard'
 
-export interface Template {
+export interface TEMPLATE {
   name: string
   desc: string
   icon: string
@@ -12,15 +12,19 @@ export interface Template {
   form?: FORM[]
 }
 
-export interface FORM {
+export interface FORM {  
   label: string
   field: string
   name: string
   required?: boolean
 }
 
-function TemplateListSection({ userSearchInput }: any) {
-  const [templateList, setTemplateList] = useState(Templates)
+interface Props {
+  userSearchInput: string;
+}
+
+function TemplateListSection({ userSearchInput }: Props) {
+  const [templateList, setTemplateList] = useState<TEMPLATE[]>(Templates)
 
   useEffect(() => {
     if (userSearchInput) {
@@ -35,8 +39,8 @@ function TemplateListSection({ userSearchInput }: any) {
 
   return (
     <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10'>
-      {templateList.map((item: Template, index: number) => (
-        <TemplateCard key={index} {...item} />
+      {templateList.map((item, index) => (
+        <TemplateCard key={index} item={item} /> 
       ))}
     </div>
   )
