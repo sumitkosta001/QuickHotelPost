@@ -2,7 +2,9 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
+html {
+  scroll-behavior: smooth;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -116,6 +118,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -123,4 +126,116 @@
 
 .cl-footer {
   display: none !important;
+}
+
+/* 🚀 Custom Components & Hover Effects */
+
+@layer components {
+
+  /* Universal Action Button */
+  .action-btn {
+    @apply flex gap-2 items-center px-4 py-2 text-sm font-medium border rounded-md bg-white shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  /* Social Buttons */
+  .social-btn {
+    @apply w-11 h-11 rounded-full flex items-center justify-center text-white text-lg transition-all duration-300 shadow-md relative overflow-visible;
+    background: var(--brand);
+  }
+
+  .social-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Tooltip */
+  .social-btn .tooltip {
+    @apply absolute -bottom-8 bg-black text-white text-xs px-2 py-1 rounded opacity-0 scale-75 transition-all duration-200 pointer-events-none;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .social-btn:hover .tooltip {
+    @apply opacity-100 scale-100;
+  }
+
+  /* Glass Card (Hybrid Tailwind + CSS Shadow) */
+  .glass-card {
+    @apply p-6 rounded-2xl shadow-xl border bg-white/70 backdrop-blur-lg transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Floating Input Field */
+  .input-wrapper {
+    @apply relative;
+  }
+
+  .input-field {
+    @apply w-full border border-gray-300 px-4 py-3 rounded-lg bg-white/80 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+  }
+
+  .input-field:focus {
+    @apply scale-[1.02] shadow-md;
+  }
+
+  .floating-label {
+    @apply absolute left-3 top-3 text-gray-500 text-sm pointer-events-none transition-all duration-200;
+  }
+
+  .input-field:not(:placeholder-shown)+.floating-label,
+  .input-field:focus+.floating-label {
+    @apply -top-2 left-3 text-xs font-semibold text-blue-600 bg-white px-1;
+  }
+
+  /* Submit Button */
+  .submit-btn {
+    @apply w-full py-3 text-white font-semibold rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::after {
+    content: "";
+    @apply absolute inset-0 bg-white/25 opacity-0 transition-opacity duration-300;
+  }
+
+  .submit-btn:hover::after {
+    opacity: 1;
+  }
+}
+
+.glow-gradient {
+  background: linear-gradient(45deg, #6366f1, #a855f7, #ec4899);
+  filter: blur(20px);
+  opacity: 0.7;
+}
+/* Add in a global stylesheet */
+@layer utilities {
+  @keyframes shine {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .shining-text {
+    background: linear-gradient(120deg,
+        #a855f7 0%,
+        #ec4899 25%,
+        #fbbf24 50%,
+        #ec4899 75%,
+        #a855f7 100%);
+    background-size: 200% auto;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
 }

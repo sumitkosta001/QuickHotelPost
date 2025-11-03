@@ -7,9 +7,12 @@ import { TEMPLATE } from "../../_components/TemplateListSection";
 import Templates from "@/app/data/Templates";
 import { useParams } from "next/navigation";
 import { generateImageClientOnly } from "@/utils/generateImage";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
+
+import { Button } from "@/components/ui/button"; // Modify if your button path differs
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 function CreateNewContent() {
   const params = useParams();
@@ -56,11 +59,14 @@ function CreateNewContent() {
   return (
     <div className="p-10">
       <Link href="/dashboard" passHref>
-        <Button asChild className="bg-primary">
-          <span className="flex items-center">
-            <ArrowLeft className="mr-2" /> Back
-          </span>
-        </Button>
+        <motion.button
+          whileHover={{ scale: 1.05, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          className="group flex items-center px-5 py-2 font-semibold rounded-full border border-transparent bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl hover:border-purple-300 transition-all duration-300"
+        >
+          <ArrowLeft className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+          Back
+        </motion.button>
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 py-5">

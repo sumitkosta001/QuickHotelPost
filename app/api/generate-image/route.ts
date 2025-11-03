@@ -1,37 +1,34 @@
-// File: /app/api/generate-image/route.ts
+// app/api/generate-image/route.ts
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+export async function POST(request: Request) {
+  const { prompt } = await request.json();
 
-export async function POST(req: Request) {
   try {
-    const { prompt } = await req.json();
-    if (!prompt) {
-      return NextResponse.json(
-        { error: "Prompt is required" },
-        { status: 400 }
-      );
+    const response = await fetch(
+      "https://router.huggingface.co/hf-inference/models/black-forest-labs/FLUX.1-dev", // Updated route
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ inputs: prompt }),
+      }
+    );
+
+    if (!response.ok) {
+      const err = await response.text();
+      return NextResponse.json({ error: err }, { status: 500 });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.8,
-        maxOutputTokens: 2048,
-      },
-    });
+    const buffer = await response.arrayBuffer();
 
-    const responseText = result?.response?.candidates?.[0]?.content?.parts?.[0]
-      ?.text;
-    
-    return NextResponse.json({ imageUrl: responseText });
+    return new Response(buffer, {
+      headers: { "Content-Type": "image/png" },
+    });
   } catch (error) {
-    console.error("Error generating image:", error);
-    return NextResponse.json(
-      { error: "Failed to generate image" },
-      { status: 500 }
-    );
+    console.error("HuggingFace error:", error);
+    return NextResponse.json({ error: "Failed to generate image" }, { status: 500 });
   }
 }

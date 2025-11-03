@@ -3,27 +3,33 @@ export const generateImageClientOnly = async (prompt: string) => {
   if (!prompt) return null;
 
   try {
-    const response = await fetch(
-      "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ inputs: prompt }),
-      }
-    );
+    const hfResponse = await fetch("/api/generate-image", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    });
 
-    if (!response.ok) {
-      console.error("HuggingFace Error:", await response.text());
+    if (!hfResponse.ok) {
+      console.error("Server-side HuggingFace Error:", await hfResponse.text());
       return null;
     }
 
-    const blob = await response.blob();
-    return URL.createObjectURL(blob); // Create URL for preview
+    const blob = await hfResponse.blob();
+
+    // Upload image to Cloudinary as before
+    const formData = new FormData();
+    formData.append("file", blob, "generated-image.png");
+
+    const uploadResponse = await fetch("/api/upload-image", {
+      method: "POST",
+      body: formData,
+    });
+
+    const uploadData = await uploadResponse.json();
+
+    return uploadData.secure_url;
   } catch (error) {
-    console.error("Error generating image:", error);
+    console.error("Error generating or uploading image:", error);
     return null;
   }
 };

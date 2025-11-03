@@ -196,22 +196,7 @@ export default [
             }
         ]
     },
-    {
-        name: 'Hotel Discount Coupon Post Generator',
-        desc: 'Generate promotional posts highlighting time-sensitive discount offers.',
-        category: 'Promotions',
-        icon: 'https://cdn-icons-png.flaticon.com/128/new-valid-icon.png',
-        slug: 'hotel-discount-coupon',
-        aiPrompt: 'Create a promotional post highlighting discount coupons and limited-time offers for hotel rooms and services in rich text format.',
-        form: [
-            {
-                label: 'Enter discount details',
-                field: 'textarea',
-                name: 'discountDetails',
-                required: true
-            }
-        ]
-    },
+   
     {
         name: 'Hotel Q&A/FAQ Content Generator',
         desc: 'Generate answers to frequently asked questions for your hotel website or social media.',
