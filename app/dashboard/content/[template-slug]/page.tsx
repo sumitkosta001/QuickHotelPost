@@ -7,12 +7,11 @@ import { TEMPLATE } from "../../_components/TemplateListSection";
 import Templates from "@/app/data/Templates";
 import { useParams } from "next/navigation";
 import { generateImageClientOnly } from "@/utils/generateImage";
-
-
-import { Button } from "@/components/ui/button"; // Modify if your button path differs
-import { ArrowLeft } from "lucide-react";
+import { SaveInDb } from "@/actions/saveAiOutput"; // ✅ Import server action
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 function CreateNewContent() {
   const params = useParams();
@@ -20,6 +19,7 @@ function CreateNewContent() {
   const [loading, setLoading] = useState(false);
   const [aiOutput, setAiOutput] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const { user } = useUser();
 
   useEffect(() => {
     if (params?.["template-slug"]) {
@@ -32,19 +32,29 @@ function CreateNewContent() {
 
   const GenerateAIContent = async (formData: Record<string, any>) => {
     setLoading(true);
-
     const SelectedPrompt = selectedTemplate?.aiPrompt || "";
     const FinalAIPrompt = JSON.stringify(formData) + ", " + SelectedPrompt;
 
     try {
+      // Generate AI text content
       const result = await chatSession.sendMessage(FinalAIPrompt);
       const responseText = await result?.response.text();
       setAiOutput(responseText || "No response from AI");
 
+      // Generate Image
       const imageUrl = await generateImageClientOnly(
         responseText || FinalAIPrompt
       );
       setGeneratedImage(imageUrl);
+
+      // Save in database using server action
+      await SaveInDb({
+        formData,
+        slug: selectedTemplate?.slug!,
+        aiResp: responseText!,
+        imgUrl: imageUrl,
+        createdBy: user?.primaryEmailAddress?.emailAddress || "anonymous",
+      });
     } catch (error) {
       console.error("Error generating content:", error);
       setAiOutput("Error generating content. Please try again.");

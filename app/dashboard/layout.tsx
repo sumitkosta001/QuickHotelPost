@@ -1,5 +1,5 @@
 import React from 'react'
-import SideNav from './_components/SideNav';
+// import SideNav from './_components/SideNav';
 import Header from './_components/Header';
 
 const layout = ({
@@ -9,11 +9,11 @@ const layout = ({
   }>) => {
   return (
     <div>
-        <div className='md:w-64 hidden md:block fixed'>
+        {/* <div className='md:w-64 hidden md:block fixed'>
             <SideNav/>
-        </div>
-        <div className='md:ml-64'>
-              <Header/>    
+        </div> */}
+        <div className='pt-16'>
+              <Header />    
             {children}
         </div>
         

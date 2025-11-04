@@ -25,17 +25,20 @@ function TemplateCard({ item }: TemplateCardProps) {
 
       <Link href={`/dashboard/content/${item?.slug}`} onClick={handleCardClick}>
         <div
-          className={`relative p-5 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-500 group-hover:shadow-lg group-hover:border-transparent group-hover:-translate-y-1 ${
+          className={`relative p-5 overflow-hidden rounded-xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 shadow-md transition-all duration-500 group-hover:shadow-xl group-hover:border-transparent group-hover:-translate-y-1 ${
             isLoading ? "pointer-events-none opacity-60" : ""
           }`}
         >
-          {/* Soft glowing gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 opacity-0 group-hover:opacity-80 blur-2xl transition-opacity duration-700 pointer-events-none"></div>
+          {/* Soft always-on gradient glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-100 via-purple-100 to-blue-100 opacity-70 blur-2xl pointer-events-none"></div>
+
+          {/* Hover brighter glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-200 via-purple-200 to-blue-200 opacity-0 group-hover:opacity-90 blur-2xl transition-opacity duration-700 pointer-events-none"></div>
 
           {/* Card Content */}
           <div className="relative z-10 flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <div className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-white to-gray-50 rounded-full shadow-inner group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+              <div className="flex items-center justify-center w-14 h-14 bg-white shadow-inner rounded-full group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
                 <Image
                   src={item.icon}
                   alt={`${item.name} icon`}

@@ -38,12 +38,12 @@ function TemplateListSection({ userSearchInput }: Props) {
   }, [userSearchInput])
 
   return (
-    <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10'>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-10 bg-gradient-to-l from-white via-purple-50 to-pink-50 backdrop-blur-xl border-b shadow-md">
       {templateList.map((item, index) => (
-        <TemplateCard key={index} item={item} /> 
+        <TemplateCard key={index} item={item} />
       ))}
     </div>
-  )
+  );
 }
 
-export default TemplateListSection
+export default TemplateListSection 
