@@ -1,6 +1,7 @@
 # QuickHotelPost 
 
-QuickHotelPost is a web application that allows users to generate AI-powered promotional content for hotels, including social media posts, YouTube video descriptions, and more. It also provides an interactive editor to customize the generated content and download images.
+QuickHotelPost is a web application that allows users to generate AI-powered promotional content for hotels, including social media posts, YouTube video descriptions, and more. It provides an interactive editor to customize the generated content, download images, and share posts directly to social media platforms such as Facebook, LinkedIn, Twitter, and Instagram.
+
 
 ---
 
@@ -102,12 +103,5 @@ This project is developed by **Sumit Kosta** and **Rutuparna Pradhan**.
 ## License
 
 This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
-
-
-
-
-
-
-
 
 
