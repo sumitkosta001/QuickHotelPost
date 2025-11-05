@@ -1,37 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuickHotelPost 
 
-## Getting Started
+QuickHotelPost is a web application that allows users to generate AI-powered promotional content for hotels, including social media posts, YouTube video descriptions, and more. It also provides an interactive editor to customize the generated content and download images.
 
-First, run the development server:
+---
 
+## Table of Contents
+
+- [Demo](#demo)  
+- [Features](#features)  
+- [Installation](#installation)  
+- [Usage](#usage)  
+- [Website Diagram](#website-diagram)  
+- [Authors](#Authors)  
+- [Technologies](#technologies)  
+- [License](#license)  
+
+---
+
+## Demo
+
+You can access the live application here: [QuickHotelPost Website](https://quickhotelpost-beige.vercel.app/)
+
+---
+
+## Features
+
+- Generate AI content for hotel promotions, social media posts, and YouTube video descriptions.
+- Inline content editing using a modern rich text editor (Tiptap Editor).
+- Preview and download AI-generated images.
+- Copy generated content to clipboard easily.
+- Share posts on social media platforms: Facebook, LinkedIn, Twitter, Instagram.
+- SEO-friendly content generation.
+
+---
+
+## Installation
+
+Follow these steps to run QuickHotelPost locally:
+
+1. **Clone the repository**  
 ```bash
+git clone https://github.com/sumitkosta001/QuickHotelPost.git
+cd QuickHotelPost
+```
+
+
+2. **Install dependencies**
+```
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. **Run the development server**
+```
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Enter your Video Title or Hotel Promotion details in the input fields.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Click Generate to get AI-powered content.
 
-## Learn More
+Edit content directly in the Tiptap Editor.
 
-To learn more about Next.js, take a look at the following resources:
+Copy text, download generated images, or share directly on social media.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Website Diagram
+<img width="1903" height="873" alt="image" src="https://github.com/user-attachments/assets/447b16ab-6153-4461-b9f9-e785f807c80a" />
+<img width="1907" height="872" alt="image" src="https://github.com/user-attachments/assets/c10331f7-a875-4e56-a06a-dcfbabf27d6d" />
+<img width="1897" height="874" alt="image" src="https://github.com/user-attachments/assets/0bed75e7-4646-49ab-a17f-283c7142c130" />
+<img width="1900" height="874" alt="image" src="https://github.com/user-attachments/assets/7e88efc6-c4b9-4767-b88e-203744bc4d71" />
+<img width="1899" height="875" alt="image" src="https://github.com/user-attachments/assets/495abdfa-b597-4c39-bf67-379cdb644e1e" />
 
-## Deploy on Vercel
+## Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Frontend:** Next.js, React 18, Tiptap Editor  
+- **Styling:** Tailwind CSS  
+- **AI & Content Generation:** Gemini API  
+- **Image Generation:** Hugging Face  
+- **Database:** PostgreSQL  
+- **Deployment:** Vercel / Netlify  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# QuickHotelPost
+
+## Authors
+
+This project is developed by **Sumit Kosta** and **Rutuparna Pradhan**.
+
+- GitHub: [Sumit Kosta](https://github.com/sumitkosta001)
+- GitHub: [Rutuparna Pradhan](https://github.com/rutuparnapradhan)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
+
+
+
+
+
+
+
+
+
