@@ -1,13 +1,15 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import "@toast-ui/editor/dist/toastui-editor.css";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { Copy, Download } from "lucide-react";
 import { Facebook, Linkedin, Twitter, Instagram, Share2 } from "lucide-react";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
-const Editor = dynamic(
-  () => import("@toast-ui/react-editor").then((mod) => mod.Editor),
+// Only dynamic import EditorContent to avoid SSR issues
+const EditorContent = dynamic(
+  () => import("@tiptap/react").then((mod) => mod.EditorContent),
   { ssr: false }
 );
 
@@ -16,14 +18,34 @@ interface OutputSectionProps {
   generatedImage: string | null;
 }
 
-function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
-  const editorRef = useRef<any>(null);
+export default function OutputSection({
+  aiOutput,
+  generatedImage,
+}: OutputSectionProps) {
+  const [initialized, setInitialized] = useState(false); // To avoid overwriting user edits
 
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: aiOutput || "",
+    editable: true,
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
+    },
+    immediatelyRender: false, // prevent SSR issues
+  });
+
+  const [content, setContent] = useState("");
+
+  // Initialize editor content only once when aiOutput changes
   useEffect(() => {
-    if (editorRef.current && aiOutput) {
-      editorRef.current.getInstance().setMarkdown(aiOutput);
+    if (editor && aiOutput && !initialized) {
+      editor.commands.setContent(aiOutput);
+      setContent(aiOutput);
+      setInitialized(true);
     }
-  }, [aiOutput]);
+  }, [aiOutput, editor, initialized]);
+
+  const copyText = () => navigator.clipboard.writeText(content);
 
   const downloadImage = () => {
     if (generatedImage) {
@@ -44,15 +66,7 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
         </h2>
 
         <div className="flex gap-3 items-center">
-          <button
-            onClick={() => {
-              if (aiOutput) {
-                navigator.clipboard.writeText(aiOutput);
-              }
-            }}
-            className="action-btn"
-            disabled={!aiOutput}
-          >
+          <button onClick={copyText} className="action-btn" disabled={!content}>
             <Copy className="w-4 h-4" /> Copy Text
           </button>
 
@@ -66,15 +80,10 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
         </div>
       </div>
 
-      {/* EDITOR */}
-      <Editor
-        ref={editorRef}
-        initialValue="Generated content will appear here..."
-        initialEditType="markdown"
-        height="300px"
-        useCommandShortcut={true}
-        previewStyle="tab"
-      />
+      {/* TIPTAP EDITOR */}
+      <div className="p-4 min-h-[300px] border-b border-gray-200">
+        {editor && <EditorContent editor={editor} />}
+      </div>
 
       {/* IMAGE + SHARE SECTION */}
       <div className="p-6 border-t bg-white/60 backdrop-blur-md">
@@ -102,7 +111,6 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
             </h4>
 
             <div className="flex gap-4 flex-wrap">
-              {/* Social Buttons */}
               <SocialIcon
                 url={`https://www.facebook.com/sharer/sharer.php?u=${generatedImage}`}
                 icon={Facebook}
@@ -117,7 +125,7 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
               />
               <SocialIcon
                 url={`https://twitter.com/intent/tweet?url=${generatedImage}&text=${encodeURIComponent(
-                  aiOutput
+                  content
                 )}`}
                 icon={Twitter}
                 color="black"
@@ -136,7 +144,7 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
                 action={() =>
                   navigator.share({
                     title: "AI Generated Post",
-                    text: aiOutput,
+                    text: content,
                     url: generatedImage,
                   })
                 }
@@ -154,9 +162,7 @@ function OutputSection({ aiOutput, generatedImage }: OutputSectionProps) {
   );
 }
 
-export default OutputSection;
-
-/* ✅ Reusable Social Icon Component */
+/* ✅ Social Icon Components */
 function SocialIcon({ url, icon: Icon, color, label, download = false }: any) {
   return (
     <a
@@ -173,7 +179,6 @@ function SocialIcon({ url, icon: Icon, color, label, download = false }: any) {
   );
 }
 
-/* ✅ Mobile Share Button (Button version) */
 function SocialIconButton({ icon: Icon, label, action }: any) {
   return (
     <button
