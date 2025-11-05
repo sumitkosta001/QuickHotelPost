@@ -98,7 +98,7 @@ Copy text, download generated images, or share directly on social media.
 This project is developed by **Sumit Kosta** and **Rutuparna Pradhan**.
 
 - GitHub: [Sumit Kosta](https://github.com/sumitkosta001)
-- GitHub: [Rutuparna Pradhan](https://github.com/rutuparnapradhan)
+- GitHub: [Rutuparna Pradhan](https://github.com/rutu-parna)
 
 ## License
 
